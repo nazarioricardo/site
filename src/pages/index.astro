@@ -8,9 +8,18 @@ import XPWindow from "../components/XPWindow.astro";
 ---
 
 <Layout>
-    <Welcome />
-    <XPWindow title="My Computer" width="600px">
-        <p>This is a Windows XP–style window built with Tailwind in Astro.</p>
-        <p slot="status">3 objects</p>
+    <!-- <Welcome /> -->
+    <XPWindow title="My Site" width="33%" menubar={[]}>
+        <h1>Ricardo Nazario</h1>
+        <span>nazarioricardo@gmail.com</span>
+        <p>
+            Hello. I'm a software developer. I love making products that make
+            life a little nicer for its users.
+        </p>
+
+        <p>
+            I've worked as a full stack and mobile developer for the past 6
+            years, making products in the music, medical, and energy industries.
+        </p>
     </XPWindow>
 </Layout>
