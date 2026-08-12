@@ -4,13 +4,26 @@ import Profile from "./Profile.astro";
 
 <div
     class="xp-titlebar cursor-move flex items-center justify-between p-2 pt-3"
-    style="background: linear-gradient(to bottom, #0058ee 0%, #3593ff 8%, #0058ee 40%, #0050ee 90%, #003ccb 100%);"
+    style="background-image:
+    linear-gradient(to right,
+    rgba(255,255,255,0.15) 0%,
+    rgba(255,255,255,0) 8%,
+    rgba(0,0,0,0.15) 92%,
+    rgba(0,0,0,0.2) 100%),
+
+    linear-gradient(
+    to bottom,
+    #0058ee 0%,
+    #83A6F4 3%,
+    #0058ee 5%,
+    #4D9FE1 98%,
+    #2178E0 100%);"
 >
     <div class="flex items-center gap-1.5">
         <Profile />
 
         <h1
-            class="text-white text-3xl ml-2 tracking-tight"
+            class="text-white text-3xl ml-2"
             style="text-shadow: 0 1px 1px rgba(0,0,0,0.5);"
         >
             Ricardo Nazario
