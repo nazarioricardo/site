@@ -1,0 +1,235 @@
+---
+export interface Props {
+    title?: string;
+    width?: string; // any CSS width value, e.g. "500px", "40rem", "90%"
+}
+const { title = "My Computer", width = "500px" } = Astro.props;
+---
+
+<div
+    class="xp-window font-[Tahoma,Verdana,sans-serif] text-[13px] select-none shadow-[4px_4px_10px_rgba(0,0,0,0.4)] rounded-t-lg overflow-hidden border-2 border-[#0831d9]"
+    style={`width: ${width}; position: relative; display: flex; flex-direction: column; box-sizing: border-box;`}
+>
+    <!-- Title bar -->
+    <div
+        class="xp-titlebar cursor-move flex items-center justify-between h-8 px-1 rounded-t-md"
+        style="background: linear-gradient(to bottom, #0058ee 0%, #3593ff 8%, #0058ee 40%, #0050ee 90%, #003ccb 100%);"
+    >
+        <div class="flex items-center gap-1.5 pl-1">
+            <div
+                class="w-4 h-4 bg-white/20 rounded-sm flex items-center justify-center"
+            >
+                <div
+                    class="w-3 h-3 rounded-sm border border-white/50"
+                    style="background: linear-gradient(135deg, #fde68a, #fb923c);"
+                >
+                </div>
+            </div>
+            <span
+                class="text-white font-bold tracking-tight"
+                style="text-shadow: 0 1px 1px rgba(0,0,0,0.5);"
+            >
+                {title}
+            </span>
+        </div>
+
+        <div class="flex gap-0.5">
+            <button
+                class="w-5.25 h-5.25 border border-[#1030a0] rounded-[3px] text-white font-bold text-[11px] leading-none hover:brightness-110 active:brightness-90 flex items-center justify-center"
+                style="background: linear-gradient(to bottom, #3980f6, #1550da);"
+            >
+                _
+            </button>
+            <button
+                class="w-5.25 h-5.25 border border-[#1030a0] rounded-[3px] text-white font-bold text-[11px] leading-none hover:brightness-110 active:brightness-90 flex items-center justify-center"
+                style="background: linear-gradient(to bottom, #3980f6, #1550da);"
+            >
+                □
+            </button>
+            <button
+                class="w-5.25 h-5.25 border border-[#a01512] rounded-[3px] text-white font-bold text-[12px] leading-none hover:brightness-110 active:brightness-90 flex items-center justify-center"
+                style="background: linear-gradient(to bottom, #f6a19f, #e0322d);"
+            >
+                ✕
+            </button>
+        </div>
+    </div>
+
+    <!-- Menu bar -->
+    <div
+        class="flex gap-4 px-2 py-1 bg-[#ece9d8] border-b border-[#aca899] text-black"
+    >
+        {
+            ["File", "Edit", "View", "Favorites", "Tools", "Help"].map((m) => (
+                <span class="hover:bg-[#3168d5] hover:text-white px-1 cursor-default">
+                    {m}
+                </span>
+            ))
+        }
+    </div>
+
+    <!-- Body -->
+    <div class="bg-white flex-1 overflow-auto p-3 border-t border-[#f4f2e8]">
+        <slot>
+            <p class="text-gray-700">Window content goes here.</p>
+        </slot>
+    </div>
+
+    <!-- Status bar -->
+    <div
+        class="h-6 bg-[#ece9d8] border-t border-[#aca899] flex items-center px-2 text-[11px] text-gray-600"
+    >
+        <slot name="status">Ready</slot>
+    </div>
+
+    <!-- Resize hit zones (invisible, XP-style) -->
+    <div
+        class="xp-resize absolute top-0 left-0 right-0 h-1.5 cursor-n-resize"
+        data-dir="n"
+    >
+    </div>
+    <div
+        class="xp-resize absolute bottom-0 left-0 right-0 h-1.5 cursor-s-resize"
+        data-dir="s"
+    >
+    </div>
+    <div
+        class="xp-resize absolute top-0 bottom-0 left-0 w-1.5 cursor-w-resize"
+        data-dir="w"
+    >
+    </div>
+    <div
+        class="xp-resize absolute top-0 bottom-0 right-0 w-1.5 cursor-e-resize"
+        data-dir="e"
+    >
+    </div>
+    <div
+        class="xp-resize absolute top-0 left-0 w-2.5 h-2.5 cursor-nw-resize"
+        data-dir="nw"
+    >
+    </div>
+    <div
+        class="xp-resize absolute top-0 right-0 w-2.5 h-2.5 cursor-ne-resize"
+        data-dir="ne"
+    >
+    </div>
+    <div
+        class="xp-resize absolute bottom-0 left-0 w-2.5 h-2.5 cursor-sw-resize"
+        data-dir="sw"
+    >
+    </div>
+    <div
+        class="xp-resize absolute bottom-0 right-0 w-2.5 h-2.5 cursor-se-resize"
+        data-dir="se"
+    >
+    </div>
+</div>
+
+<script>
+    function initDrag(win: HTMLElement) {
+        const bar = win.querySelector<HTMLElement>(".xp-titlebar");
+        if (!bar || win.dataset.dragInit) return;
+        win.dataset.dragInit = "true";
+
+        let dragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        bar.addEventListener("mousedown", (e) => {
+            dragging = true;
+            const rect = win.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+            win.style.position = "fixed";
+            win.style.margin = "0";
+            win.style.left = `${rect.left}px`;
+            win.style.top = `${rect.top}px`;
+            win.style.zIndex = "1000";
+            e.preventDefault();
+        });
+
+        window.addEventListener("mousemove", (e) => {
+            if (!dragging) return;
+            win.style.left = `${e.clientX - offsetX}px`;
+            win.style.top = `${e.clientY - offsetY}px`;
+        });
+
+        window.addEventListener("mouseup", () => {
+            dragging = false;
+        });
+    }
+
+    function initResize(win: HTMLElement) {
+        const handles = win.querySelectorAll<HTMLElement>(".xp-resize");
+        if (!handles.length || win.dataset.resizeInit) return;
+        win.dataset.resizeInit = "true";
+
+        let dir = "";
+        let resizing = false;
+        let startX = 0,
+            startY = 0;
+        let startWidth = 0,
+            startHeight = 0;
+        let startLeft = 0,
+            startTop = 0;
+
+        handles.forEach((handle) => {
+            handle.addEventListener("mousedown", (e) => {
+                resizing = true;
+                dir = handle.dataset.dir || "";
+                const rect = win.getBoundingClientRect();
+                startX = e.clientX;
+                startY = e.clientY;
+                startWidth = rect.width;
+                startHeight = rect.height;
+                startLeft = rect.left;
+                startTop = rect.top;
+
+                // ensure fixed positioning so left/top edits work (same as drag)
+                win.style.position = "fixed";
+                win.style.margin = "0";
+                win.style.left = `${startLeft}px`;
+                win.style.top = `${startTop}px`;
+                win.style.zIndex = "1000";
+
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+
+        window.addEventListener("mousemove", (e) => {
+            if (!resizing) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            const minW = 220,
+                minH = 120;
+
+            if (dir.includes("e")) {
+                win.style.width = `${Math.max(minW, startWidth + dx)}px`;
+            }
+            if (dir.includes("s")) {
+                win.style.height = `${Math.max(minH, startHeight + dy)}px`;
+            }
+            if (dir.includes("w")) {
+                const newWidth = Math.max(minW, startWidth - dx);
+                win.style.width = `${newWidth}px`;
+                win.style.left = `${startLeft + (startWidth - newWidth)}px`;
+            }
+            if (dir.includes("n")) {
+                const newHeight = Math.max(minH, startHeight - dy);
+                win.style.height = `${newHeight}px`;
+                win.style.top = `${startTop + (startHeight - newHeight)}px`;
+            }
+        });
+
+        window.addEventListener("mouseup", () => {
+            resizing = false;
+            dir = "";
+        });
+    }
+
+    document.querySelectorAll<HTMLElement>(".xp-window").forEach((win) => {
+        initDrag(win);
+        initResize(win);
+    });
+</script>
