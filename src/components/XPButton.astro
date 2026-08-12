@@ -1,0 +1,28 @@
+---
+export interface Props {
+    label?: string;
+}
+const { label = "OK" } = Astro.props;
+---
+
+<button
+    class="relative
+    px-4 py-1 text-sm text-black
+    bg-[#ECE9D8]
+    border border-[#919B9C]
+    rounded-[3px]
+    hover:cursor-pointer
+    shadow-[inset_1px_1px_0_#FFFFFF,inset_-1px_-1px_0_#848284,1px_1px_1px_rgba(0,0,0,0.2)]
+    active:shadow-[inset_1px_1px_0_#848284,inset_-1px_-1px_0_#FFFFFF]
+    active:bg-[#DCD9C8]
+    focus:outline-none
+    focus-visible:before:content-['']
+    focus-visible:before:absolute
+    focus-visible:before:inset-0.75
+    focus-visible:before:border
+    focus-visible:before:border-dotted
+    focus-visible:before:border-black
+    focus-visible:before:pointer-events-none"
+>
+    {label}
+</button>

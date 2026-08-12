@@ -2,24 +2,47 @@
 import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
 import XPWindow from "../components/XPWindow.astro";
-
+import XPButton from "../components/XPButton.astro";
+import email from "../assets/email.png";
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
     <!-- <Welcome /> -->
-    <XPWindow title="My Site" width="33%" menubar={[]}>
-        <h1>Ricardo Nazario</h1>
-        <span>nazarioricardo@gmail.com</span>
-        <p>
-            Hello. I'm a software developer. I love making products that make
-            life a little nicer for its users.
-        </p>
+    <XPWindow width="33%" menubar={[]} titlebar="header">
+        <div class="p-3">
+            <div class="flex flex-row items-center gap-2">
+                <a
+                    href="mailto:nazarioricardo@gmail.com"
+                    class="flex flex-row items-center gap-2 bg-white hover:bg-[#0058ee] hover:text-white pr-12"
+                >
+                    <img src={email.src} alt="email" class="h-20" />
+                    <div class="flex flex-col">
+                        <span class="font-bold">Email</span>
+                        <span class="font-light">
+                            nazarioricardo@gmail.com
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="flex flex-col flex-1 justify-between bg-[#ece9d8] p-4">
+            <div>
+                <p class="mb-4">
+                    Hello. I'm a software developer. I love making products that
+                    make life a little nicer for its users.
+                </p>
 
-        <p>
-            I've worked as a full stack and mobile developer for the past 6
-            years, making products in the music, medical, and energy industries.
-        </p>
+                <p>
+                    I've worked as a full stack and mobile developer for the
+                    past 6 years, making products in the music, medical, and
+                    energy industries.
+                </p>
+            </div>
+            <div class="flex flex-row w-full justify-end">
+                <XPButton label="Download CV" />
+            </div>
+        </div>
     </XPWindow>
 </Layout>

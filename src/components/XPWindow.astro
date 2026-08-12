@@ -1,5 +1,6 @@
 ---
 import Titlebar from "./Titlebar.astro";
+import Headerbar from "./Headerbar.astro";
 import Menubar from "./Menubar.astro";
 import Resize from "./Resize.astro";
 
@@ -7,24 +8,26 @@ export interface Props {
     title?: string;
     width?: string; // any CSS width value, e.g. "500px", "40rem", "90%"
     menubar?: string[];
+    titlebar?: "default" | "header";
 }
 const {
     title = "My Computer",
     width = "500px",
     menubar = ["File", "Edit", "View", "Favorites", "Tools", "Help"],
+    titlebar = "default",
 } = Astro.props;
 ---
 
 <div
-    class="xp-window font-[Tahoma,Verdana,sans-serif] text-[13px] select-none shadow-[4px_4px_10px_rgba(0,0,0,0.4)] rounded-t-lg overflow-hidden border-2 border-[#0831d9]"
+    class="xp-window flex flex-col font-[Tahoma,Verdana,sans-serif] text-[13px] select-none shadow-[4px_4px_10px_rgba(0,0,0,0.4)] rounded-t-lg overflow-hidden border-2 border-[#0831d9]"
     style={`width: ${width}; position: relative; display: flex; flex-direction: column; box-sizing: border-box;`}
 >
-    <Titlebar title={title} />
-    <Menubar items={menubar} />
+    {titlebar === "header" ? <Headerbar /> : <Titlebar title={title} />}
+    {menubar.length > 0 && <Menubar items={menubar} />}
 
     <!-- Body -->
     <div
-        class="bg-[#ece9d8] flex-1 overflow-auto p-3 border-t border-[#f4f2e8]"
+        class="bg-white flex-1 overflow-auto border-t border-[#f4f2e8] flex flex-col"
     >
         <slot>
             <p class="text-gray-700">Window content goes here.</p>
@@ -32,11 +35,13 @@ const {
     </div>
 
     <!-- Status bar -->
-    <div
-        class="h-6 bg-[#ece9d8] border-t border-[#aca899] flex items-center px-2 text-[11px] text-gray-600"
-    >
-        <slot name="status">Ready</slot>
-    </div>
+    {
+        titlebar === "default" ? (
+            <div class="h-6 bg-[#ece9d8] border-t border-[#aca899] flex items-center px-2 text-[11px] text-gray-600">
+                <slot name="status">Ready</slot>
+            </div>
+        ) : null
+    }
 
     <Resize />
 </div>
