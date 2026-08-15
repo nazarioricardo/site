@@ -19,16 +19,24 @@ const {
 ---
 
 <div
-    class={`xp-window flex flex-col font-[Tahoma,Verdana,sans-serif] text-[13px] select-none shadow-[4px_4px_10px_rgba(0,0,0,0.4)] ${titlebar === "header" ? "rounded-t-xl" : "rounded-t-lg"} overflow-hidden`}
+    class={`xp-window
+    flex flex-col
+    font-[Tahoma,Verdana,sans-serif] text-[13px]
+    overflow-hidden
+    select-none
+    ${titlebar === "header" ? "rounded-t-xl" : "rounded-t-lg"}
+    `}
     style={`width: ${width}; position: relative; display: flex; flex-direction: column;`}
 >
     {titlebar === "header" ? <Headerbar /> : <Titlebar title={title} />}
-    <div class="border-2 border-t-0 border-[#2178E0]">
+    <div
+        class="border-2 border-t-0 border-[#2178E0] flex flex-col flex-1 min-h-0"
+    >
         {menubar.length > 0 && <Menubar items={menubar} />}
 
         <!-- Body -->
         <div
-            class="bg-white flex-1 overflow-auto border-t border-[#f4f2e8] flex flex-col"
+            class="bg-white flex-1 overflow-auto border-t border-[#f4f2e8] flex flex-col min-h-0"
         >
             <slot>
                 <p class="text-gray-700">Window content goes here.</p>
