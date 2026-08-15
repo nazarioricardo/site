@@ -1,46 +1,18 @@
-# Astro Starter Kit: Basics
+You've reached my github page!
 
-```sh
-npm create astro@latest -- --template basics
+![Happy Larry](larry-happy.gif)
+
+It also happens to be the README for my personal website's repository.
+
+[https://nazarioricardo.com](https://nazarioricardo.com)
+
+## A Bit About Me.
+
+```javascript
+Boolean(
+  "I like programming and making nice things. I used to make a lot of music. Now I play guitar in my spare time. I'm from Puerto Rico, I speak Spanish, English, and I'm trying to learn Portuguese and German. Because why not?"
+);
+// This will resolve to true, therefore, it is one bit, and it is about me.
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+![Sad Larry](larry-sad.gif)
