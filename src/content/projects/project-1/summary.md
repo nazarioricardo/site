@@ -1,12 +1,15 @@
-# Copper Dashboard
-
-A new Copper experience that emphasizes easy-to-read data, with information organized in a way that better reflects how Copper wants users to engage with the app.
-
-## Background
+---
+title: "Copper Dashboard"
+description: "A new Copper experience that emphasizes easy-to-read data, with information organized in a way that better reflects how Copper wants users to engage with the app."
+thumbnail: "./thumbnail.png"
+---
+# Background
 
 Copper shows you how much electricity, gas, and water you use over time. It requires installing a Copper device in your home, registering your residence’s utility meters, and synching with a mobile app. The app then displays your utility usage and your emissions data. It notifies you of peak demand events and anomalies so that you can better manage your consumption.
 
-## Before
+# Before
+
+![Screenshot](./assets/before.png)
 
 Copper was first designed to track electric meters only. In those days, the entire screen was dedicated to showing any electric data.
 
@@ -18,7 +21,9 @@ Through user research, we also learned that many users couldn't make much sense 
 
 The engineering team, including myself, was also concerned that this current approach was becoming cluttered. Every new feature was just being slapped on wherever it fit, and we didn't know where to place some upcoming features.
 
-## After
+# After
+
+![Screenshot](./assets/after.png)
 
 The new design displays all of the user's meters on one screen and gives a readable total value for the current day's consumption. It also displays your meter's connection status.
 
@@ -30,10 +35,10 @@ For quick delivery and expedited user feedback, the number at the end of the bar
 
 This project also marked the beginning of applying material design more strictly throughout the mobile app in order to enforce consistent design decisions.
 
-## My Role 
+# My Role 
 
 I designed and implemented the new information structure and UX. I honed in on the design and correct technical approach with user feedback and constant in-house testing.
 
-## Outcome
+# Outcome
 
 Higher visibility of users' meters resulted in a significant decrease in support tickets regarding meter installations. According to our Hubspot analytics, we had approximately 60% fewer tickets for three months compared to the three months before the release.

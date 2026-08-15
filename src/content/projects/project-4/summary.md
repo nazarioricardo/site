@@ -1,10 +1,9 @@
-# Remix by Remidi
-
-Remix was an iOS app that made Remidi’s hardware accessible to non-professional musicians. It used Bluetooth to connect to Remidi Pro. Once connected, it was up to the user’s creativity to make cool sounds.
-
-## Background
-
-https://www.youtube.com/watch?v=lJjqT7zo5Qg&source_ve_path=NzY3NTg&embeds_referring_euri=https%3A%2F%2Fnazarioricardo.com%2F&embeds_referring_origin=https%3A%2F%2Fnazarioricardo.com
+---
+title: "Remix by Remidi"
+description: "Remix was an iOS app that made Remidi’s hardware accessible to non-professional musicians. It used Bluetooth to connect to Remidi Pro. Once connected, it was up to the user’s creativity to make cool sounds."
+thumbnail: "./thumbnail.png"
+---
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lJjqT7zo5Qg?si=5TSH4y9bU9wCGAcP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 Remidi wanted to improve the visuals and performance of their mobile app,
 
