@@ -1,0 +1,92 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import type { CollectionEntry } from "astro:content";
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import { slugify } from "../../utils/slugify";
+
+export async function getStaticPaths() {
+    const projects = await getCollection("projects");
+    return projects.map((p) => ({
+        params: { slug: slugify(p.data.title) },
+        props: { project: p },
+    }));
+}
+
+interface Props {
+    project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<Layout>
+    <article class="content w-2/3">
+        <h1>{project.data.title}</h1>
+        <div class="flex flex-row items-center gap-2 mb-8">
+            <Image
+                class="h-16 w-16 m-0!"
+                }
+                src={project.data.thumbnail}
+                alt={project.data.title}
+            />
+            <p class="m-0!">
+                {project.data.description}
+            </p>
+        </div>
+        <div class="body">
+            <Content />
+        </div>
+    </article>
+    <style is:global>
+        .content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .content p {
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+            color: #333;
+        }
+        .content img {
+            margin: 2rem 0;
+            max-width: 100%;
+        }
+        .content .body img {
+            margin: 2rem 0;
+            max-width: 100%;
+            height: 24rem;
+            width: 24rem;
+        }
+        .content a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+        .content code {
+            background: #f4f4f4;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .content pre {
+            background: #1e1e1e;
+            color: #eee;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        ul,
+        .content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+    </style>
+</Layout>

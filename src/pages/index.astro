@@ -2,19 +2,17 @@
 import Layout from "../layouts/Layout.astro";
 import XPWindow from "../components/XPWindow.astro";
 import XPButton from "../components/XPButton.astro";
+import email from "../assets/email.png";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
-import email from "../assets/email.png";
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { slugify } from "../utils/slugify";
 
 const projects: CollectionEntry<"projects">[] = await getCollection("projects");
 ---
 
 <Layout>
     <!-- <Welcome /> -->
-    <div class="h-16"></div>
-    <XPWindow width='100%"' menubar={[]} titlebar="header">
+    <XPWindow width="66%" menubar={[]} titlebar="header">
         <div class="p-3">
             <div class="flex flex-row items-center gap-2">
                 <button
@@ -60,18 +58,18 @@ const projects: CollectionEntry<"projects">[] = await getCollection("projects");
         </div>
     </XPWindow>
 
-    <h1>Projects</h1>
+    <h2>Projects</h2>
     <ul>
         {
             projects.map((project) => (
                 <li>
-                    <a href={`/projects/${project.id}`}>
+                    <a href={`/projects/${slugify(project.data.title)}`}>
                         <Image
                             src={project.data.thumbnail}
                             alt={project.data.title}
                             width={400}
                         />
-                        <h2>{project.data.title}</h2>
+                        <h3>{project.data.title}</h3>
                         <p>{project.data.description}</p>
                     </a>
                 </li>

@@ -4,7 +4,7 @@ description: "Improvements to Copper's meter onboarding process for improved UX 
 thumbnail: "./thumbnail.png"
 ---
 
-# Background
+## Background
 
 Copper Labs' user onboarding was made up of three components:
 - Creating a home
@@ -15,7 +15,7 @@ Issues arose during meter addition. We received a large amount of mislabeled met
 
 Our first solution was a backend process that would analyze a meter's data over time to determine the probability that a meter was mislabeled. This was a technically exciting solution but highly impractical.
 
-# Solution
+## Solution
 
 After digging into the data, I noticed patterns in the barcode IDs of different meter types. We discovered we could accurately determine the meter type with active barcode scanning.
 
@@ -27,6 +27,6 @@ If the user couldn’t find a barcode in 10 seconds, we would revert to the old 
 
 ![Screenshot](./assets/not-found.png)
 
-# Outcome
+## Outcome
 
 After shipping this feature, the data — along with visual verification from team members — confirmed that the amount of mislabeled meters had reduced significantly. This cut costs by reducing the use of asynchronous backend processes and gave users an easier meter onboarding experience.
