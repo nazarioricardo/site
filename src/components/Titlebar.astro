@@ -7,9 +7,51 @@ const { title } = Astro.props;
 ---
 
 <div
-    class="xp-titlebar cursor-move flex items-center justify-between h-8 px-1 rounded-t-md"
-    style="background: linear-gradient(to bottom, #0058ee 0%, #3593ff 8%, #0058ee 40%, #0050ee 90%, #003ccb 100%);"
+    class="xp-titlebar
+    cursor-move
+    flex items-center justify-between
+    p-2 pt-3
+    relative"
+    style="
+    background-image:
+        linear-gradient(to right,
+        rgba(255,255,255,0.15) 0%,
+        rgba(255,255,255,0) 8%,
+        rgba(0,0,0,0.15) 92%,
+        rgba(0,0,0,0.2) 100%
+        ),
+        linear-gradient(
+        to bottom,
+        #0058ee 0%,
+        #0058ee 5%,
+        #4D9FE1 98%,
+        #2178E0 100%
+    );
+    "
 >
+    <div
+        class="pointer-events-none absolute inset-0 shadow-[inset_8px_0_10px_-4px_rgba(33,120,224,0.9),inset_-8px_0_10px_-4px_rgba(33,120,224,0.9)]"
+    >
+    </div>
+    <div
+        class="pointer-events-none absolute inset-0 inset-x-2"
+        style="
+        background-image: radial-gradient(ellipse 300% 3% at 100% 3%,
+            rgba(255,255,255,0.9) 0%,
+            rgba(255,255,255,0) 70%);
+            mask-image: linear-gradient(to right,
+                transparent 0%,
+                white 4%,
+                white 96%,
+                transparent 100%);
+            -webkit-mask-image: linear-gradient(to right,
+                transparent 0%,
+                white 4%,
+                white 96%,
+                transparent 100%);
+        "
+    >
+    </div>
     <div class="flex items-center gap-1.5 pl-1">
         <div
             class="w-4 h-4 bg-white/20 rounded-sm flex items-center justify-center"
@@ -26,26 +68,5 @@ const { title } = Astro.props;
         >
             {title}
         </span>
-    </div>
-
-    <div class="flex gap-0.5">
-        <button
-            class="w-5.25 h-5.25 border border-[#1030a0] rounded-[3px] text-white font-bold text-[11px] leading-none hover:brightness-110 active:brightness-90 flex items-center justify-center"
-            style="background: linear-gradient(to bottom, #3980f6, #1550da);"
-        >
-            _
-        </button>
-        <button
-            class="w-5.25 h-5.25 border border-[#1030a0] rounded-[3px] text-white font-bold text-[11px] leading-none hover:brightness-110 active:brightness-90 flex items-center justify-center"
-            style="background: linear-gradient(to bottom, #3980f6, #1550da);"
-        >
-            □
-        </button>
-        <button
-            class="w-5.25 h-5.25 border border-[#a01512] rounded-[3px] text-white font-bold text-[12px] leading-none hover:brightness-110 active:brightness-90 flex items-center justify-center"
-            style="background: linear-gradient(to bottom, #f6a19f, #e0322d);"
-        >
-            ✕
-        </button>
     </div>
 </div>

@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import XPWindow from "../../components/XPWindow.astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection, render } from "astro:content";
 import { Image } from "astro:assets";
@@ -23,23 +24,37 @@ const { Content } = await render(project);
 
 <Layout>
     <article class="content w-2/3">
-        <h1>{project.data.title}</h1>
-        <div class="flex flex-row items-center gap-4 mb-8">
-            <Image
-                class="m-0!"
-                }
-                src={project.data.thumbnail}
-                alt={project.data.title}
-                width={100}
-            />
-            <p class="m-0!">
-                {project.data.description}
-            </p>
-        </div>
+        <XPWindow title={project.data.title} menubar={[]}>
+            <div class="flex flex-row items-center gap-4 bg-[#ece9d8]">
+                <Image
+                    id="thumbnail-image"
+                    class="m-0!"
+                    src={project.data.thumbnail}
+                    alt={project.data.title}
+                    width={100}
+                />
+                <p class="m-0!">
+                    {project.data.description}
+                </p>
+            </div>
+        </XPWindow>
         <div class="body">
             <Content />
         </div>
     </article>
+
+    <div
+        id="image-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4 cursor-pointer"
+    >
+        <img
+            id="image-modal-img"
+            src=""
+            alt=""
+            class="max-h-[90vh] max-w-[90vw] object-contain"
+        />
+    </div>
+
     <style is:global>
         .content h1 {
             font-size: 2.5rem;
@@ -65,6 +80,7 @@ const { Content } = await render(project);
             max-width: 100%;
             height: 24rem;
             width: 24rem;
+            cursor: pointer;
         }
         .content a {
             color: #2563eb;
@@ -89,4 +105,35 @@ const { Content } = await render(project);
             margin-bottom: 1.25rem;
         }
     </style>
+    <script>
+        const modal = document.getElementById("image-modal") as HTMLDivElement;
+        const modalImg = document.getElementById(
+            "image-modal-img",
+        ) as HTMLImageElement;
+
+        function openModal(src: string, alt: string) {
+            modalImg.src = src;
+            modalImg.alt = alt;
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeModal() {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            modalImg.src = "";
+        }
+
+        document.querySelectorAll(".content .body img").forEach((img) => {
+            img.addEventListener("click", () => {
+                const el = img as HTMLImageElement;
+                openModal(el.src, el.alt);
+            });
+        });
+
+        modal.addEventListener("click", closeModal);
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeModal();
+        });
+    </script>
 </Layout>
