@@ -7,27 +7,30 @@ import Resize from "./Resize.astro";
 export interface Props {
     title?: string;
     width?: string; // any CSS width value, e.g. "500px", "40rem", "90%"
+    class?: string;
     menubar?: string[];
     titlebar?: "default" | "header";
 }
 const {
     title = "My Computer",
     width = "500px",
+    class: className = "",
     menubar = ["File", "Edit", "View", "Favorites", "Tools", "Help"],
     titlebar = "default",
 } = Astro.props;
 ---
 
-<div class="xp-window-slot" style={`width: ${width}; height: auto;`}>
+<div class={"xp-window-slot"} style={`width: 100%; height: auto;`}>
     <div
         class={`xp-window
-    flex flex-col
-    font-[Tahoma,Verdana,sans-serif] text-[13px]
-    overflow-hidden
-    select-none
-    ${titlebar === "header" ? "rounded-t-xl" : "rounded-t-lg"}
-    `}
-        style={`width: ${width}; position: fixed; display: flex; flex-direction: column;`}
+              flex flex-col
+              fixed
+              font-[Tahoma,Verdana,sans-serif] text-[13px]
+              overflow-hidden
+              select-none
+              ${titlebar === "header" ? "rounded-t-xl" : "rounded-t-lg"}
+              ${className ? ` ${className}` : ""}
+          `}
     >
         {titlebar === "header" ? <Headerbar /> : <Titlebar title={title} />}
         <div
