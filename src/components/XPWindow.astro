@@ -18,17 +18,17 @@ const {
 } = Astro.props;
 ---
 
-<div class={"xp-window-slot"} style={`width: auto; height: auto;`}>
+<div class={"xp-window-slot relative"}>
     <div
         class={`xp-window
               flex flex-col
-              fixed
+              relative
               font-[Tahoma,Verdana,sans-serif] text-[13px]
               overflow-hidden
               select-none
+              w-full
               min-w-0
               ${titlebar === "header" ? "rounded-t-xl" : "rounded-t-lg"}
-              ${className ? ` ${className}` : ""}
           `}
     >
         {titlebar === "header" ? <Headerbar /> : <Titlebar title={title} />}
@@ -58,8 +58,28 @@ const {
     </div>
 </div>
 
+<style>
+    @media (max-width: 767px) {
+        .xp-window-slot {
+            width: 100% !important;
+            height: auto !important;
+        }
+        .xp-window {
+            position: relative !important;
+            width: 100% !important;
+            left: auto !important;
+            top: auto !important;
+            height: auto !important;
+        }
+    }
+</style>
+
 <script>
+    const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
+
     function initDrag(win: HTMLElement) {
+        if (isMobile()) return;
+
         const bar = win.querySelector<HTMLElement>(".xp-titlebar");
         if (!bar || win.dataset.dragInit) return;
         win.dataset.dragInit = "true";
@@ -70,22 +90,26 @@ const {
 
         bar.addEventListener("mousedown", (e) => {
             dragging = true;
-            win.dataset.dragged = "true"; // mark permanently once dragged
+            win.dataset.dragged = "true";
+
             const rect = win.getBoundingClientRect();
             offsetX = e.clientX - rect.left;
             offsetY = e.clientY - rect.top;
-            win.style.position = "fixed";
+
+            win.style.position = "absolute";
             win.style.margin = "0";
-            win.style.left = `${rect.left}px`;
-            win.style.top = `${rect.top}px`;
+            win.style.left = `${win.offsetLeft}px`;
+            win.style.top = `${win.offsetTop}px`;
             win.style.zIndex = "1000";
             e.preventDefault();
         });
 
         window.addEventListener("mousemove", (e) => {
             if (!dragging) return;
-            win.style.left = `${e.clientX - offsetX}px`;
-            win.style.top = `${e.clientY - offsetY}px`;
+            const parent = win.offsetParent as HTMLElement;
+            const parentRect = parent.getBoundingClientRect();
+            win.style.left = `${e.clientX - parentRect.left - offsetX}px`;
+            win.style.top = `${e.clientY - parentRect.top - offsetY}px`;
         });
 
         window.addEventListener("mouseup", () => {
@@ -94,6 +118,8 @@ const {
     }
 
     function initResize(win: HTMLElement) {
+        if (isMobile()) return;
+
         const handles = win.querySelectorAll<HTMLElement>(".xp-resize");
         if (!handles.length || win.dataset.resizeInit) {
             return;
@@ -118,11 +144,10 @@ const {
                 startY = e.clientY;
                 startWidth = rect.width;
                 startHeight = rect.height;
-                startLeft = rect.left;
-                startTop = rect.top;
+                startLeft = win.offsetLeft;
+                startTop = win.offsetTop;
 
-                // ensure fixed positioning so left/top edits work (same as drag)
-                win.style.position = "fixed";
+                win.style.position = "absolute";
                 win.style.margin = "0";
                 win.style.left = `${startLeft}px`;
                 win.style.top = `${startTop}px`;
@@ -165,6 +190,8 @@ const {
     }
 
     function syncSlotHeight(win: HTMLElement) {
+        if (isMobile()) return;
+
         const slot = win.closest<HTMLElement>(".xp-window-slot");
         if (!slot) {
             return;
@@ -173,7 +200,7 @@ const {
         const resizeObserver = new ResizeObserver(() => {
             if (
                 win.dataset.dragged === "true" ||
-                getComputedStyle(win).position !== "fixed"
+                getComputedStyle(win).position !== "absolute"
             ) {
                 resizeObserver.disconnect(); // stop syncing entirely
                 return;
@@ -181,12 +208,23 @@ const {
             slot.style.height = `${win.offsetHeight}px`;
             slot.style.width = `${win.offsetWidth}px`;
         });
+
+        win.style.position = "absolute";
+
         resizeObserver.observe(win);
     }
 
-    document.querySelectorAll<HTMLElement>(".xp-window").forEach((win) => {
+    const init = (win: HTMLElement) => {
         initDrag(win);
         initResize(win);
         syncSlotHeight(win);
+    };
+
+    document.querySelectorAll<HTMLElement>(".xp-window").forEach((win) => {
+        init(win);
+
+        window.addEventListener("resize", () => {
+            init(win);
+        });
     });
 </script>

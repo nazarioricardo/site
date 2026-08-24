@@ -14,11 +14,7 @@ const projects: CollectionEntry<"projects">[] = await getCollection("projects");
     <!-- <Welcome /> -->
     <div class="h-5 md:h-16"></div>
 
-    <XPWindow
-        class="w-full md:w-2/3 relative md:fixed"
-        menubar={[]}
-        titlebar="header"
-    >
+    <XPWindow menubar={[]} titlebar="header">
         <div class="p-3">
             <div class="flex flex-row items-center gap-2">
                 <button
