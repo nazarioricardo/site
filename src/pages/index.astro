@@ -25,9 +25,9 @@ const projects: CollectionEntry<"projects">[] = await getCollection("projects");
                     type="button"
                     id="copy-email-btn"
                     data-email="nazarioricardo@gmail.com"
-                    class="flex flex-row items-center gap-2 w-1/2 bg-white hover:cursor-pointer hover:bg-[#0058ee] hover:text-white pr-4"
+                    class="flex flex-row items-center gap-1 md:gap-2 w-full md:w-1/2 bg-white hover:cursor-pointer hover:bg-[#0058ee] hover:text-white pr-4"
                 >
-                    <img src={email.src} alt="email" class="h-20" />
+                    <img src={email.src} alt="email" class="h-12 md:h-20" />
                     <div class="flex flex-col text-left">
                         <span class="font-bold">Email</span>
                         <span class="font-light">
