@@ -139,7 +139,11 @@ const {
             handle.addEventListener("mousedown", (e) => {
                 resizing = true;
                 dir = handle.dataset.dir || "";
+
+                win.dataset.userResized = "true";
+
                 const rect = win.getBoundingClientRect();
+
                 startX = e.clientX;
                 startY = e.clientY;
                 startWidth = rect.width;
@@ -189,35 +193,38 @@ const {
         });
     }
 
-    function syncSlotHeight(win: HTMLElement) {
+    function syncSlotSize(win: HTMLElement) {
         if (isMobile()) return;
 
         const slot = win.closest<HTMLElement>(".xp-window-slot");
-        if (!slot) {
-            return;
-        }
+        if (!slot) return;
 
-        const resizeObserver = new ResizeObserver(() => {
-            if (
-                win.dataset.dragged === "true" ||
-                getComputedStyle(win).position !== "absolute"
-            ) {
-                resizeObserver.disconnect(); // stop syncing entirely
-                return;
+        const update = () => {
+            if (isMobile()) return;
+
+            // If the window has been manually resized, don't override it.
+            if (win.dataset.userResized === "true") return;
+
+            const slotWidth =
+                slot.parentElement?.clientWidth ?? slot.clientWidth;
+
+            if (slotWidth > 0) {
+                win.style.width = `${slotWidth}px`;
             }
-            slot.style.height = `${win.offsetHeight}px`;
+
             slot.style.width = `${win.offsetWidth}px`;
-        });
+            slot.style.height = `${win.offsetHeight}px`;
+        };
 
-        win.style.position = "absolute";
+        update();
 
-        resizeObserver.observe(win);
+        window.addEventListener("resize", update);
     }
 
     const init = (win: HTMLElement) => {
         initDrag(win);
         initResize(win);
-        syncSlotHeight(win);
+        syncSlotSize(win);
     };
 
     document.querySelectorAll<HTMLElement>(".xp-window").forEach((win) => {
