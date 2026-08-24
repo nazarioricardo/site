@@ -12,9 +12,13 @@ const projects: CollectionEntry<"projects">[] = await getCollection("projects");
 
 <Layout>
     <!-- <Welcome /> -->
-    <div class="h-16"></div>
+    <div class="h-5 md:h-16"></div>
 
-    <XPWindow class="w-2/3" menubar={[]} titlebar="header">
+    <XPWindow
+        class="w-full md:w-2/3 relative md:fixed"
+        menubar={[]}
+        titlebar="header"
+    >
         <div class="p-3">
             <div class="flex flex-row items-center gap-2">
                 <button
@@ -104,12 +108,12 @@ const projects: CollectionEntry<"projects">[] = await getCollection("projects");
                 <li>
                     <a
                         href={`/projects/${slugify(project.data.title)}`}
-                        class="flex flex-row gap-3 mb-4 hover:opacity-80 group"
+                        class="flex flex-row gap-3 mb-4 items-start hover:opacity-80 group"
                     >
                         <Image
                             src={project.data.thumbnail}
                             alt={project.data.title}
-                            width={100}
+                            class="w-30 object-contain"
                         />
                         <div class="flex flex-col">
                             <h3 class="text-xl font-semibold group-hover:underline group-focus:underline underline-offset-2">

@@ -6,21 +6,19 @@ import Resize from "./Resize.astro";
 
 export interface Props {
     title?: string;
-    width?: string; // any CSS width value, e.g. "500px", "40rem", "90%"
     class?: string;
     menubar?: string[];
     titlebar?: "default" | "header";
 }
 const {
     title = "My Computer",
-    width = "500px",
     class: className = "",
     menubar = ["File", "Edit", "View", "Favorites", "Tools", "Help"],
     titlebar = "default",
 } = Astro.props;
 ---
 
-<div class={"xp-window-slot"} style={`width: 100%; height: auto;`}>
+<div class={"xp-window-slot"} style={`width: auto; height: auto;`}>
     <div
         class={`xp-window
               flex flex-col
@@ -28,6 +26,7 @@ const {
               font-[Tahoma,Verdana,sans-serif] text-[13px]
               overflow-hidden
               select-none
+              min-w-0
               ${titlebar === "header" ? "rounded-t-xl" : "rounded-t-lg"}
               ${className ? ` ${className}` : ""}
           `}
@@ -96,7 +95,9 @@ const {
 
     function initResize(win: HTMLElement) {
         const handles = win.querySelectorAll<HTMLElement>(".xp-resize");
-        if (!handles.length || win.dataset.resizeInit) return;
+        if (!handles.length || win.dataset.resizeInit) {
+            return;
+        }
         win.dataset.resizeInit = "true";
 
         let dir = "";
@@ -165,10 +166,15 @@ const {
 
     function syncSlotHeight(win: HTMLElement) {
         const slot = win.closest<HTMLElement>(".xp-window-slot");
-        if (!slot) return;
+        if (!slot) {
+            return;
+        }
 
         const resizeObserver = new ResizeObserver(() => {
-            if (win.dataset.dragged === "true") {
+            if (
+                win.dataset.dragged === "true" ||
+                getComputedStyle(win).position !== "fixed"
+            ) {
                 resizeObserver.disconnect(); // stop syncing entirely
                 return;
             }
